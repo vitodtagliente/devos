@@ -16,12 +16,12 @@ class Driver
 class DriverManager
 {
     public:
-        Driver* drivers[265];
+        Driver* drivers[255];
         int numDrivers;
         
     public:
         DriverManager();
-        void AddDriver(Driver*);
+        void Add(Driver*);
         
         void EnableAll();    
 };

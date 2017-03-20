@@ -1,6 +1,6 @@
 
 #include <drivers/keyboard.h>
-#include <drivers/monitor.h>
+#include <monitor.h>
 
 KeyboardEventHandler::KeyboardEventHandler()
 {
