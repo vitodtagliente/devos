@@ -165,7 +165,10 @@ unsigned int InterruptManager::DoHandleInterrupt(unsigned char interrupt, unsign
     }
     else if(interrupt != hardwareInterruptOffset)
     {
-        Monitor::printf("UNHANDLED INTERRUPT 0x");
+        Monitor * monitor = Monitor::singleton;
+        monitor->setForeground(Monitor::light_red);
+        monitor->writeLine("UNHANDLED INTERRUPT 0x");
+        monitor->setForeground(Monitor::white);
     }
     
     if(interrupt == hardwareInterruptOffset)

@@ -5,6 +5,8 @@
 #include <interrupts.h>
 #include <port.h>
 #include <driver.h>
+#include <system.h>
+#include <monitor.h>
 
 class MouseEventHandler
 {
@@ -39,7 +41,7 @@ class MouseToConsoleEventHandler : public MouseEventHandler
             VideoMemory[80*y+x] = (VideoMemory[80*y+x] & 0x0F00) << 4
                                 | (VideoMemory[80*y+x] & 0xF000) >> 4
                                 | (VideoMemory[80*y+x] & 0x00FF);
-
+            
             x += xoffset;
             if(x >= 80) x = 79;
             if(x < 0) x = 0;
@@ -50,6 +52,7 @@ class MouseToConsoleEventHandler : public MouseEventHandler
             VideoMemory[80*y+x] = (VideoMemory[80*y+x] & 0x0F00) << 4
                                 | (VideoMemory[80*y+x] & 0xF000) >> 4
                                 | (VideoMemory[80*y+x] & 0x00FF);
+            
         }
         
 };

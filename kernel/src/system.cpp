@@ -48,3 +48,46 @@ void outportb (unsigned short _port, unsigned char _data)
 {
     __asm__ __volatile__ ("outb %1, %0" : : "dN" (_port), "a" (_data));
 }
+
+char *strcpy(char *dest, char *src) {
+    char *orig = dest;
+    while((*dest++ = *src++)!= '\0')
+        ; // <<== Very important!!!
+    return orig;
+}
+
+void reverse(char *s)
+{
+   char *j;
+   int i = strlen(s);
+
+   strcpy(j,s);
+   while (i-- >= 0)
+      *(s++) = j[i];
+   *s = '\0';
+}
+
+/* itoa()
+* converts an integer into a string */
+
+void itoa(int n, char *buffer, int base)
+{
+   char *ptr = buffer;
+   int lowbit;
+
+   base >>= 1;
+   do
+   {
+      lowbit = n & 1;
+      n = (n >> 1) & 32767;
+      *ptr = ((n % base) << 1) + lowbit;
+      if (*ptr < 10)
+         *ptr +='0';
+      else
+         *ptr +=55;
+      ++ptr;
+   }
+   while (n /= base);
+   *ptr = '\0';
+   reverse (buffer);   /* reverse string */
+}
