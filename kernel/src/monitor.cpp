@@ -184,4 +184,19 @@ void Monitor::printf(const char* str){
     if( singleton != 0 ){
         singleton->write(str);
     }
+    else 
+    {
+        Monitor monitor;
+        monitor.writeLine(str);
+    }
+}
+
+unsigned char Monitor::getForeground()
+{
+    return this->fore;
+}
+
+unsigned char Monitor::getBackground()
+{
+    return this->back;
 }

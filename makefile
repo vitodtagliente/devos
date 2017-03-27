@@ -3,8 +3,11 @@ ASPARAMS = --32
 LDPARAMS = -melf_i386
 
 objects = obj/loader.o \
-		  obj/src/system.o \
+		  obj/std/memory.o \
+		  obj/std/string.o \
+		  obj/std/casting.o \
 		  obj/src/monitor.o \
+		  obj/src/log.o \
 		  obj/src/gdt.o \
 		  obj/src/port.o \
 		  obj/x86/interrupts.o \
@@ -13,9 +16,6 @@ objects = obj/loader.o \
 		  obj/drivers/keyboard.o \
 		  obj/drivers/mouse.o \
 		  obj/drivers/vga.o \
-		  obj/gui/widget.o \
-		  obj/gui/window.o \
-		  obj/gui/desktop.o \
           obj/main.o
 
 run: 

@@ -2,6 +2,8 @@
 #ifndef __MONITOR_H_
 #define __MONITOR_H_
 
+#include <port.h>
+
 class Monitor
 {
     private:
@@ -27,6 +29,8 @@ class Monitor
         void setColor(unsigned char forecolor, unsigned char backcolor);
         void setForeground(unsigned char fore);
         void setBackground(unsigned char back);
+        unsigned char getForeground();
+        unsigned char getBackground();
 
         static void printf(const char *str);
 

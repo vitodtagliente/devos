@@ -1,15 +1,12 @@
 
 #include <system.h>
 #include <monitor.h>
+#include <log.h>
 #include <gdt.h>
 #include <interrupts.h>
 #include <driver.h>
 #include <drivers/keyboard.h>
 #include <drivers/mouse.h>
-#include <drivers/vga.h>
-
-#include <gui/desktop.h>
-#include <gui/window.h>
 
 class PrintfKeyboardEventHandler : public KeyboardEventHandler
 {
@@ -36,49 +33,34 @@ extern "C" void kernelMain(void* multiboot_structure, unsigned int magic_number 
 	monitor.setForeground(Monitor::white);
 
 	GlobalDescriptorTable gdt;
-	monitor.write("Loaded GDT Module\n");
+	Log::success("Loaded GDT Module");
 	
-	monitor.write("Loaded Port Module\n");
+	Log::success("Loaded Port Module");
 
 	DriverManager driverManager;
 
 	InterruptManager interrupts(0x20, &gdt);
-	monitor.write("Loaded InterruptManager Module\n");
+	Log::success("Loaded InterruptManager Module");
 
 	PrintfKeyboardEventHandler keyboardHandler;
 	Keyboard keyboard(&interrupts, &keyboardHandler);
-	monitor.write("Loaded Keyboard Driver\n");
+	Log::success("Loaded Keyboard Driver");
 
 	MouseToConsoleEventHandler mouseHandler;
 	Mouse mouse(&interrupts, &mouseHandler);
-	monitor.write("Loaded Mouse Driver\n");
+	Log::success("Loaded Mouse Driver");
 
 	driverManager.Add(&keyboard);
 	driverManager.Add(&mouse);
 	driverManager.EnableAll();
 
 	interrupts.Enable();
-	monitor.write("Interrupts Enabled\n");
+	Log::success("Interrupts Enabled\n");
 
-	monitor.write("\n");
-	monitor.setForeground(Monitor::light_green);
-	monitor.write("Kernel Ready\n");
+	Log::info("Kernel Ready\n");
 
-	// Video Mode
-	#ifdef VIDEOMODE
-	VideoGraphicsArray vga;
-	vga.SetMode(320, 200, 8);
-
-	Desktop desktop(320, 200, 0x00, 0x00, 0xA8);
-	Window win1(&desktop, 10, 10, 30, 30, 0xA8, 0x00, 0x00);
-	Window win2(&desktop, 50, 10, 30, 30, 0x00, 0xA8, 0x00);
-	desktop.AddChild(&win1);
-	desktop.AddChild(&win2);
-	#endif
 
 	while(1){
-		#ifdef VIDEOMODE
-		desktop.Draw(&vga);
-		#endif
+		
 	}
 }
